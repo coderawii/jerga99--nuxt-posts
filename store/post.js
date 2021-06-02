@@ -12,7 +12,14 @@ export const state = () => ({
   postItems: []
 });
 
-//* Very good spot to send a request to a server. Usually Actions resolve into some data
+//! Getters are like computed properties but for Vuex
+export const getters = {
+  hasEmptyItems(state) {
+    return state.postItems.length === 0;
+  }
+};
+
+//! Very good spot to send a request to a server. Usually Actions resolve into some data
 export const actions = {
   fetchPosts({ commit }) {
     return fetchPostsAPI().then(posts => {
@@ -21,8 +28,8 @@ export const actions = {
   }
 };
 
-// * Mutations are simple functions taht have access to a state
-// * Mutations are used to assign values to a state
+// ! Mutations are simple functions taht have access to a state
+// ! Mutations are used to assign values to a state
 export const mutations = {
   setPosts(state, posts) {
     state.postItems = posts;

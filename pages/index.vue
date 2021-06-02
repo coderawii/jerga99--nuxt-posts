@@ -54,7 +54,9 @@ export default {
   },
   //* I nacin
   fetch({ store }) {
-    return store.dispatch("post/fetchPosts");
+    if (store.getters["post/hasEmptyItems"]) {
+      return store.dispatch("post/fetchPosts");
+    }
   },
   //* II nacin
   // async fetch({ store }) {

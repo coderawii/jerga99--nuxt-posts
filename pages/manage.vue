@@ -81,6 +81,13 @@
 <script>
 // import { mapState } from "vuex";
 export default {
+  fetch({ store }) {
+    if (store.state.post.postItems.length === 0) {
+      console.log("fetching data in manage page");
+    }
+
+    return store.dispatch("post/fetchPosts");
+  },
   computed: {
     // ...mapState(["posts"]),
     posts() {
