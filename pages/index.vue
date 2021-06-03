@@ -52,6 +52,9 @@ export default {
       }
     };
   },
+  //? The fetch method is used to fill the store before rendering the page, it's like the asyncData method except it doesn't set the component data. The fetch method, if set, is called every time before loading the component (only for page components).
+  //? https://morioh.com/p/289c1f5b44ee
+
   //* I nacin
   fetch({ store }) {
     if (store.getters["post/hasEmptyItems"]) {

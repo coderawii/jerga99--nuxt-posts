@@ -6,9 +6,47 @@
         <aside class="column is-2 aside hero">
           <div>
             <div class="compose has-text-centered">
-              <a class="button is-danger is-block is-bold">
-                <span class="compose">Create</span>
-              </a>
+              <shared-modal>
+                <!-- //! ovo mu popunjava onaj <slot></slot> u Modal.vue. ISKORISTITI ZA VEGANIFY -->
+                <template #actionButton>
+                  <a class="button is-danger is-block is-bold">
+                    <span class="compose">Create</span>
+                  </a>
+                </template>
+                <!-- //? ovo je default content za Modal.vue -->
+                <form class="post-form">
+                  <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                      <input
+                        class="input"
+                        type="text"
+                        placeholder="Awesome Title"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Subtitle</label>
+                    <div class="control">
+                      <input
+                        class="input"
+                        type="email"
+                        placeholder="Awesome subtitle"
+                      />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Content</label>
+                    <div class="control">
+                      <textarea
+                        class="textarea"
+                        placeholder="Awesome Content"
+                      ></textarea>
+                    </div>
+                  </div>
+                </form>
+              </shared-modal>
             </div>
             <div class="main"></div>
           </div>
@@ -108,5 +146,9 @@ export default {
     cursor: pointer;
     background-color: #eeeeee;
   }
+}
+
+.post-form {
+  text-align: left;
 }
 </style>
