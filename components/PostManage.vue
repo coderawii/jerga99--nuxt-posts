@@ -16,7 +16,7 @@
       <div class="control">
         <input
           class="input"
-          type="email"
+          type="text"
           placeholder="Awesome subtitle"
           v-model="post.subtitle"
         />
@@ -32,7 +32,9 @@
         ></textarea>
       </div>
     </div>
-    <button class="button is-primary">Update</button>
+    <button @click.prevent="updatePost" class="button is-primary">
+      Update
+    </button>
   </form>
 </template>
 
@@ -51,6 +53,11 @@ export default {
       //* kada god se apdejtuje postData props voleli bismo da se runnuje ova postData f-ja tj watcher
       //   debugger;
       this.post = { ...newValue };
+    }
+  },
+  methods: {
+    updatePost() {
+      this.$store.dispatch("post/updatePost", { ...this.post });
     }
   }
 };
