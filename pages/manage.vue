@@ -17,6 +17,9 @@
               :key="post.id"
               @click="activatePost(post)"
               class="card"
+              :class="{
+                'is-active': activePost && post._id === activePost._id
+              }"
             >
               <div class="card-content">
                 <div class="msg-header">
@@ -75,6 +78,14 @@ export default {
       activePost: {}
     };
   },
+
+  computed: {
+    // ...mapState(["posts"]),
+    posts() {
+      return this.$store.state.post.postItems;
+    }
+  },
+
   fetch({ store }) {
     if (store.state.post.postItems.length === 0) {
       console.log("fetching data in manage page");
@@ -82,12 +93,11 @@ export default {
 
     return store.dispatch("post/fetchPosts");
   },
-  computed: {
-    // ...mapState(["posts"]),
-    posts() {
-      return this.$store.state.post.postItems;
-    }
+
+  created() {
+    if (this.posts && this.posts.length > 0) this.activePost = this.posts[0];
   },
+
   methods: {
     activatePost(post) {
       this.activePost = post;
@@ -102,9 +112,10 @@ export default {
 
 .card {
   margin-bottom: 10px;
+  cursor: pointer;
 
-  &:hover {
-    cursor: pointer;
+  &:hover,
+  &.is-active {
     background-color: #eeeeee;
   }
 }

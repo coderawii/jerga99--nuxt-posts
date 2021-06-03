@@ -44,6 +44,14 @@ export default {
     return {
       post: { ...this.postData } //* opet pravimo kopiju da ne mutiramo original
     };
+  },
+  watch: {
+    //* mogu da pratim svoje podatke, i takodje mogu da posmatram props tj postData tj promene u istom!!
+    postData(newValue, oldValue) {
+      //* kada god se apdejtuje postData props voleli bismo da se runnuje ova postData f-ja tj watcher
+      //   debugger;
+      this.post = { ...newValue };
+    }
   }
 };
 </script>
