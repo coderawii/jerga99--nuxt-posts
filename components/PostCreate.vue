@@ -58,10 +58,16 @@ export default {
     };
   },
   methods: {
-    createPost(someValue) {
-      console.log("createPost called");
-      console.log(someValue);
-      console.log(this.form);
+    createPost({ closeModal, data }) {
+      console.log(data);
+      this.$store.dispatch("post/createPost", { ...this.form }); //! saljemo KOPIJU ovog this.form objekta, a ne bas taj objekt, jer se javlja error [vuex] don not mutate vuex store state outside mutation handlers!!!!, dakle ne mozemo da saljemo this.form (jer posle u resetu zapravo resetujemo formu koja je sada deo vuex store-a jer su form podaci pushed u state i onda kada resetujemo mi pokusavamo da mutate (menjamo) state van vuex handlera, a to (vuex store se edituje samo unutar vuex-a) se radi samo unutar vuex-a) vec { ...this.form }
+      closeModal();
+      this.resetForm();
+    },
+    resetForm() {
+      this.form.title = "";
+      this.form.subtitle = "";
+      this.form.content = "";
     }
   }
 };

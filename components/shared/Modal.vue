@@ -49,12 +49,16 @@ export default {
   },
   methods: {
     emitModalSubmit() {
-      console.log("Calling emitSave");
-      this.$emit(
-        "modalSubmitted",
-        "Just some value iz Modal.vue ka parentu PostCreate.vue"
-      );
+      this.$emit("modalSubmitted", {
+        closeModal: this.closeModal,
+        data:
+          "just some data iz Modal.vue ka parentu PostCreate.vue koji tamo prikupimo kao argument f-ji"
+      }); //* ovo drugo je just some value iz Modal.vue ka parentu PostCreate.vue koji tamo prikupimo kao argument f-ji
       // this.$emit("modalSubmitted");
+      // this.closeModal(); //! moze i ovako, al on je pre zaono bas nakon dispatch-a u PostCreate, da se tad zatvori modal. WISE !!!
+    },
+    closeModal() {
+      this.isOpenModal = false;
     }
   }
 };
