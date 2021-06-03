@@ -2,8 +2,8 @@
   <div>
     <div @click="isOpenModal = true">
       <!-- //! ovaj Open btn u slot je default content u slucajy da #actionButton slot termplate zaboravimo da dodamo, ali ako dodamo taj template ono gazi ovu difoltnu vrednost u slotu tj Open btn u ovom slucaju. Zakomentarisi onaj template #actionButton u manage.vue i videces -->
-      <slot name="actionButton"
-        ><button class="button is-primary">Open</button>
+      <slot name="actionButton">
+        <button class="button is-primary">Open</button>
       </slot>
       <!-- <a class="button is-danger is-block is-bold">
         <span class="compose">Create</span>
@@ -29,7 +29,9 @@
         </section>
 
         <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
+          <button @click="emitModalSubmit" class="button is-success">
+            Save changes
+          </button>
           <!-- //* Close Modal -->
           <button @click="isOpenModal = false" class="button">Cancel</button>
         </footer>
@@ -44,6 +46,16 @@ export default {
     return {
       isOpenModal: false
     };
+  },
+  methods: {
+    emitModalSubmit() {
+      console.log("Calling emitSave");
+      this.$emit(
+        "modalSubmitted",
+        "Just some value iz Modal.vue ka parentu PostCreate.vue"
+      );
+      // this.$emit("modalSubmitted");
+    }
   }
 };
 </script>
