@@ -12,7 +12,12 @@
           <div class="inbox-messages" id="inbox-messages">
             <!-- CARD STARTS -->
             <!-- <card v-for="post in posts" :key="post.id" /> -->
-            <div class="card" v-for="post in posts" :key="post.id">
+            <div
+              v-for="post in posts"
+              :key="post.id"
+              @click="activatePost(post)"
+              class="card"
+            >
               <div class="card-content">
                 <div class="msg-header">
                   <span class="msg-from"><small>From Filip Jerga</small></span>
@@ -33,22 +38,11 @@
             </div>
           </div>
         </div>
-        <div
-          class="column is-6 message hero is-fullheight is-hidden"
-          id="message-pane"
-        >
+        <div class="column is-6 message hero is-fullheight" id="message-pane">
           <div class="box message-preview">
-            <div class="top">
-              <div class="avatar">
-                <img src="https://place-hold.it/128x128" />
-              </div>
-              <div class="address">
-                <div class="name">John Smith</div>
-                <div class="email">someone@gmail.com</div>
-              </div>
-              <hr />
-              <div class="content"></div>
-            </div>
+            <PostManage :postData="activePost" />
+
+            <div class="top"></div>
           </div>
         </div>
       </div>
@@ -76,6 +70,11 @@
 <script>
 // import { mapState } from "vuex";
 export default {
+  data() {
+    return {
+      activePost: {}
+    };
+  },
   fetch({ store }) {
     if (store.state.post.postItems.length === 0) {
       console.log("fetching data in manage page");
@@ -87,6 +86,11 @@ export default {
     // ...mapState(["posts"]),
     posts() {
       return this.$store.state.post.postItems;
+    }
+  },
+  methods: {
+    activatePost(post) {
+      this.activePost = post;
     }
   }
 };
