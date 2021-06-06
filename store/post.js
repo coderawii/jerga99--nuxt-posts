@@ -11,7 +11,8 @@ export function fetchPostsAPI() {
 
 export const state = () => ({
   postItems: [],
-  archivedPosts: []
+  archivedPosts: [],
+  postItem: {}
 });
 
 //! Getters are like computed properties but for Vuex
@@ -58,6 +59,16 @@ export const actions = {
   fetchPosts({ commit }) {
     return this.$axios.$get("/api/posts").then(posts => {
       commit("setPosts", posts);
+      return posts;
+    });
+  },
+
+  fetchPostByID({ commit }, postID) {
+    return this.$axios.$get("/api/posts").then(posts => {
+      const selectedPost = posts.find(p => p._id === postID);
+
+      commit("setPost", selectedPost);
+      return selectedPost;
     });
   },
 
@@ -121,6 +132,9 @@ export const mutations = {
   },
   setPosts(state, posts) {
     state.postItems = posts;
+  },
+  setPost(state, post) {
+    state.postItem = post;
   },
   addPost(state, post) {
     state.postItems.push(post);
