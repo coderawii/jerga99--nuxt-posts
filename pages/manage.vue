@@ -9,7 +9,11 @@
         </aside>
 
         <div class="column is-4 messages hero is-fullheight" id="message-feed">
-          <div class="inbox-messages" id="inbox-messages">
+          <div
+            v-if="posts && posts.length > 0"
+            class="inbox-messages"
+            id="inbox-messages"
+          >
             <!-- CARD STARTS -->
             <!-- <card v-for="post in posts" :key="post.id" /> -->
             <div
@@ -40,12 +44,17 @@
               </div>
             </div>
           </div>
+          <div v-else class="inbox-messages no-posts-title">
+            There are no posts :(
+          </div>
         </div>
         <div class="column is-6 message hero is-fullheight" id="message-pane">
-          <div class="box message-preview">
-            <PostManage :postData="activePost" />
+          <div v-if="activePost" class="box message-preview">
+            <button @click="deletePost" class="button is-danger delete-button">
+              Delete
+            </button>
 
-            <div class="top"></div>
+            <PostManage :postData="activePost" />
           </div>
         </div>
       </div>
@@ -75,7 +84,7 @@
 export default {
   data() {
     return {
-      activePost: {}
+      activePost: null
     };
   },
 
@@ -88,23 +97,40 @@ export default {
 
   fetch({ store }) {
     if (store.state.post.postItems.length === 0) {
-      console.log("fetching data in manage page");
+      return store.dispatch("post/fetchPosts");
     }
 
     return store.dispatch("post/fetchPosts");
   },
 
   created() {
-    if (this.posts && this.posts.length > 0) this.activePost = this.posts[0];
+    this.setInitialActivePost();
   },
 
   methods: {
     activatePost(post) {
       this.activePost = post;
+    },
+    setInitialActivePost() {
+      if (this.posts && this.posts.length > 0) this.activePost = this.posts[0];
+      else this.activePost = null;
+    },
+    deletePost() {
+      // debugger;
+      if (this.activePost) {
+        this.$store
+          .dispatch("post/deletePost", this.activePost._id)
+          .then(() => {
+            // debugger;
+
+            this.setInitialActivePost();
+          });
+      }
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .manage-page {
   padding: 30px !important;
@@ -118,5 +144,16 @@ export default {
   &.is-active {
     background-color: #eeeeee;
   }
+}
+
+.no-posts-title {
+  font-size: 30px;
+}
+
+.delete-button {
+  display: block;
+  width: 100px;
+  margin-left: auto;
+  margin-right: 0;
 }
 </style>

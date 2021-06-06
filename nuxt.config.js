@@ -43,7 +43,7 @@ export default {
   //   "~/server" // a index.js ne treba jer automatski tarzi index.js
   // ],
 
-  serverMiddleware: ["~/server/index.js"],
+  serverMiddleware: ["~/server/routes/index"],
   // serverMiddleware: ["~/api/index.js"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

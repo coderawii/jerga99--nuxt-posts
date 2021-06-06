@@ -1,27 +1,18 @@
 {
   "posts": [
     {
-      "_id": 0,
-      "title": "Neki title 1",
-      "subtitle": "Neki subtitle 1",
-      "createdAt": 1622971997,
-      "isRead": false,
-      "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+      "title": "Sve je ok",
+      "subtitle": "Izgleda da sve radi kako treba",
+      "content": "Izgleda da sve radi kako trebaIzgleda da sve radi kako trebaIzgleda da sve radi kako treba",
+      "_id": "8db6nkd",
+      "createdAt": 1622984010118
     },
     {
-      "_id": 1,
-      "title": "Neki title 2",
-      "subtitle": "Neki subtitle 2",
-      "createdAt": 1622971997,
-      "isRead": true,
-      "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
-    },
-    {
-      "title": "initialData.posts.push(post)",
-      "subtitle": "a ne initialData.push(post)",
-      "content": "  initialData.push(post); // post koji primamo iz rikvesta pushujemo u initial_data.json. //! PUSH ne radi ovde direktno nad initialData, zasto? Jer on f-nise sa nizovima, a initialData je OBJEKAT, msm json smo napravili kao objekat jelte. Dakle dodajemo posts tj initialData.posts.push(post)\n",
-      "_id": "w747dgq",
-      "createdAt": 1622974609829
+      "title": "Dodajemo jos jedno EDIT",
+      "subtitle": "Dodajemo jos jedno EDIT",
+      "content": "Dodajemo jos jednoDodajemo jos jednoDodajemo jos jednoDodajemo jos jednoDodajemo jos jedno EDITEDITEDITEDITEDITEDITEDIT",
+      "_id": "nyvzwcs",
+      "createdAt": 1622984022382
     }
   ]
 }

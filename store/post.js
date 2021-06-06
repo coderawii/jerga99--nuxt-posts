@@ -35,8 +35,8 @@ export const actions = {
     postData.createdAt = new Date().getTime();
 
     return this.$axios.$post("/api/posts", postData).then(res => {
-      console.log(res);
       commit("addPost", postData);
+      return postData;
     });
   },
   updatePost({ commit, state }, postData) {
@@ -46,7 +46,27 @@ export const actions = {
 
     if (postIndex !== -1) {
       // ako je postIndex -1 onda to znaci da on ne postoji
-      commit("replacePost", { post: postData, index: postIndex });
+      return this.$axios
+        .$patch(`/api/posts/${postData._id}`, postData)
+        .then(res => {
+          // console.log(res);
+          commit("replacePost", { post: postData, index: postIndex });
+          return postData; // obicaj je kao da se iz promice nesto vraca pa zato stavljamo ovaj return
+        });
+    }
+  },
+  deletePost({ commit, state }, postID) {
+    const postIndex = state.postItems.findIndex(post => post._id === postID);
+
+    // debugger;
+
+    if (postIndex !== -1) {
+      return this.$axios.$delete(`/api/posts/${postID}`).then(res => {
+        // debugger;
+
+        commit("deletePost", postIndex);
+        return postID;
+      });
     }
   }
 };
@@ -63,5 +83,8 @@ export const mutations = {
   replacePost(state, { post, index }) {
     // state.postItems[index] = post;
     Vue.set(state.postItems, index, post);
+  },
+  deletePost(state, postIndex) {
+    state.postItems.splice(postIndex, 1);
   }
 };
