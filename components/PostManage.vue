@@ -32,6 +32,10 @@
         ></textarea>
       </div>
     </div>
+    <div class="markdown">
+      <label for="" class="label">Content Preview</label>
+      <div v-html="compiledMarkdown"></div>
+    </div>
     <button @click.prevent="updatePost" class="button is-primary">
       Update
     </button>
@@ -53,6 +57,12 @@ export default {
       //* kada god se apdejtuje postData props voleli bismo da se runnuje ova postData f-ja tj watcher
       //   debugger;
       this.post = { ...newValue };
+    }
+  },
+  computed: {
+    compiledMarkdown() {
+      if (process.client) return marked(this.post.content, { sanitize: true });
+      return "";
     }
   },
   methods: {

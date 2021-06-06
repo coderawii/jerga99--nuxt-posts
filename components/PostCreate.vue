@@ -42,6 +42,11 @@
           ></textarea>
         </div>
       </div>
+
+      <div class="markdown">
+        <label for="" class="label">Content Preview</label>
+        <div v-html="compiledMarkdown"></div>
+      </div>
     </form>
   </SharedModal>
 </template>
@@ -57,6 +62,12 @@ export default {
       }
     };
   },
+  computed: {
+    compiledMarkdown() {
+      if (process.client) return marked(this.form.content, { sanitize: true });
+      return "";
+    }
+  },
   methods: {
     createPost({ closeModal, data }) {
       console.log(data);
@@ -64,6 +75,7 @@ export default {
       closeModal();
       this.resetForm();
     },
+
     resetForm() {
       this.form.title = "";
       this.form.subtitle = "";
