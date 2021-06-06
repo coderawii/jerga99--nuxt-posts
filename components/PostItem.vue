@@ -29,12 +29,12 @@ export default {
     },
     subtitle: {
       type: String,
-      required: true
+      required: false
     },
     date: {
-      type: Date,
+      type: Number,
       required: false,
-      default: () => new Date() // default po novom nuxt-u mora biti factory function
+      default: () => new Date().getDate() // default po novom nuxt-u mora biti factory function
     },
     isRead: {
       type: Boolean,

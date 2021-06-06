@@ -32,8 +32,12 @@ export const actions = {
     postData._id = Math.random()
       .toString(36)
       .substr(2, 7);
-    postData.createdAt = new Date();
-    commit("addPost", postData);
+    postData.createdAt = new Date().getTime();
+
+    return this.$axios.$post("/api/posts", postData).then(res => {
+      console.log(res);
+      commit("addPost", postData);
+    });
   },
   updatePost({ commit, state }, postData) {
     const postIndex = state.postItems.findIndex(post => {
