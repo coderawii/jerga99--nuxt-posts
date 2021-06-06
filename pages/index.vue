@@ -14,14 +14,17 @@
                   <hr />
                 </div>
                 <!-- Post -->
-                <p v-if="!POSTS.length">Loading posts...</p>
-                <post-item
-                  v-for="post in POSTS"
-                  :key="post.id"
-                  :title="post.title"
-                  :subtitle="post.subtitle"
-                  :isRead="post.isRead"
-                />
+                <template v-if="POSTS && POSTS.length > 0">
+                  <PostItem
+                    v-for="post in POSTS"
+                    :key="post.id"
+                    :title="post.title"
+                    :subtitle="post.subtitle"
+                    :isRead="post.isRead"
+                    :id="post._id"
+                  />
+                </template>
+                <p v-else>No posts</p>
               </div>
               <!-- end of posts -->
             </div>
@@ -52,7 +55,7 @@ export default {
       }
     };
   },
-  //? The fetch method is used to fill the store before rendering the page, it's like the asyncData method except it doesn't set the component data. The fetch method, if set, is called every time before loading the component (only for page components).
+  //? The fetch method is used to fill the store before rendering the page, it's like the asyncData method except it doesn't set the component data. The fetch method, if set, is called every time before loading the component (only for page components). Fetch se poziva na serveru, zato recimo ne bismo mogli tu staviti ovo za localStorage jer server nema pristup localStorage-u koji je part of browser
   //? https://morioh.com/p/289c1f5b44ee
 
   //* I nacin
@@ -80,6 +83,9 @@ export default {
   //     console.log(posts);
   //   });
   // },
+  mounted() {
+    this.$store.dispatch("post/getArchivedPosts");
+  },
   computed: {
     //* I nacin
     // ...mapState(["posts"]),
@@ -96,6 +102,9 @@ export default {
     POSTS() {
       // return this.$store.state.postItems;
       return this.$store.state.post.postItems; //! sad mora post.posts jer smo kreirali post.js fajl odn kor sad taj namespace kao
+    },
+    ARCHIVED_POSTS() {
+      return this.$store.state.post.archivedPosts;
     }
   },
   methods: {

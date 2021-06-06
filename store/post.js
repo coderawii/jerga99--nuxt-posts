@@ -10,7 +10,8 @@ export function fetchPostsAPI() {
 }
 
 export const state = () => ({
-  postItems: []
+  postItems: [],
+  archivedPosts: []
 });
 
 //! Getters are like computed properties but for Vuex
@@ -22,11 +23,44 @@ export const getters = {
 
 //! Very good spot to send a request to a server. Usually Actions resolve into some data
 export const actions = {
+  getArchivedPosts({ commit }) {
+    const archivedPosts = localStorage.getItem("archived_posts");
+
+    if (archivedPosts) {
+      commit("setArchivedPosts", JSON.parse(archivedPosts));
+      return archivedPosts;
+    } else {
+      localStorage.setItem("archived_posts", JSON.stringify([]));
+      return [];
+    }
+  },
+
+  togglePost({ state, commit, dispatch }, postID) {
+    if (state.archivedPosts.includes(postID)) {
+      // remove post id
+      const index = state.archivedPosts.findIndex(pid => pid === postID);
+      commit("removeArchivedPost", index);
+      dispatch("LSpersistArchivePosts");
+      return postID;
+    } else {
+      // add postID
+      commit("addArchivedPost", postID);
+      dispatch("LSpersistArchivePosts");
+
+      return postID;
+    }
+  },
+
+  LSpersistArchivePosts({ state }) {
+    localStorage.setItem("archived_posts", JSON.stringify(state.archivedPosts));
+  },
+
   fetchPosts({ commit }) {
-    return fetchPostsAPI().then(posts => {
+    return this.$axios.$get("/api/posts").then(posts => {
       commit("setPosts", posts);
     });
   },
+
   createPost({ commit }, postData) {
     // create post on server, or perssist data in some way
     postData._id = Math.random()
@@ -39,6 +73,7 @@ export const actions = {
       return postData;
     });
   },
+
   updatePost({ commit, state }, postData) {
     const postIndex = state.postItems.findIndex(post => {
       return post._id === postData._id;
@@ -55,6 +90,7 @@ export const actions = {
         });
     }
   },
+
   deletePost({ commit, state }, postID) {
     const postIndex = state.postItems.findIndex(post => post._id === postID);
 
@@ -74,6 +110,15 @@ export const actions = {
 // ! Mutations are simple functions taht have access to a state
 // ! Mutations are used to assign values to a state
 export const mutations = {
+  setArchivedPosts(state, archivedPosts) {
+    state.archivedPosts = archivedPosts;
+  },
+  addArchivedPost(state, postID) {
+    state.archivedPosts.push(postID);
+  },
+  removeArchivedPost(state, index) {
+    state.archivedPosts.splice(index, 1);
+  },
   setPosts(state, posts) {
     state.postItems = posts;
   },

@@ -10,8 +10,7 @@ app.use(express.json());
 
 //************ REQUESTS
 app.get("/posts", function(req, res) {
-  return res.json({ posts: "Just some testing data" });
-  // res.status(200).json({ message: "I work" });
+  return res.json(initialData.posts);
 });
 
 app.post("/posts", function(req, res) {

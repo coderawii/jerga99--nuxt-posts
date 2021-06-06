@@ -13,7 +13,7 @@
 
     <div class="post-right">
       <label class="checkbox">
-        <input type="checkbox" :checked="isRead" />
+        <input type="checkbox" :checked="isArchived" @change="togglePost" />
         Read
       </label>
     </div>
@@ -23,6 +23,10 @@
 <script>
 export default {
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -34,18 +38,26 @@ export default {
     date: {
       type: Number,
       required: false,
-      default: () => new Date().getDate() // default po novom nuxt-u mora biti factory function
+      default: () => new Date().getTime() // default po novom nuxt-u mora biti factory function
     },
     isRead: {
       type: Boolean,
       required: false
     }
   },
-  // props: ["title", "subtitle", "date"]
-  data() {
-    return {};
+  computed: {
+    archivedPosts() {
+      return this.$store.state.post.archivedPosts;
+    },
+    isArchived() {
+      return this.archivedPosts.includes(this.id);
+    }
   },
-  methods: {}
+  methods: {
+    togglePost() {
+      this.$store.dispatch("post/togglePost", this.id);
+    }
+  }
 };
 </script>
 
