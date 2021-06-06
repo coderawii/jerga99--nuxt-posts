@@ -1,11 +1,11 @@
-import { INITIAL_DATA } from "./index";
+import INITIAL_DATA from "./initial_data.json";
 import Vue from "vue";
 
 export function fetchPostsAPI() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(INITIAL_DATA.posts);
-    }, 200);
+    }, 0);
   });
 }
 
@@ -36,11 +36,14 @@ export const actions = {
     commit("addPost", postData);
   },
   updatePost({ commit, state }, postData) {
-    // console.log(postData);
     const postIndex = state.postItems.findIndex(post => {
       return post._id === postData._id;
     });
-    commit("replacePost", { post: postData, index: postIndex });
+
+    if (postIndex !== -1) {
+      // ako je postIndex -1 onda to znaci da on ne postoji
+      commit("replacePost", { post: postData, index: postIndex });
+    }
   }
 };
 

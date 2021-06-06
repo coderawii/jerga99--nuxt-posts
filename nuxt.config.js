@@ -12,6 +12,8 @@ export default {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
+  // Customize the progress-bar color
+  loading: { color: "#ff0000" },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
@@ -34,6 +36,15 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  // serverMiddleware: [
+  //   //! ovo ne trba da se mesa sa onim nasim middleware. serverMiddleware je kolekcija node i express kompatibilne middleware koje ce biti executovane prajer (WTF) to the nuxt rendering process. dakle ovde mozemo da pokrenemo bilo koji express middleware koji zelimo da se pokrene PRVI ukljucujuci nas licni. pa hajmo da kreiramo novi folder, recimo api, i njemu index.js u kom cemo napisati nas licni express kod, a pre toga hajde prvo d ainstaliramo Express npm install --save express
+  //   // bodyParser.json(),
+  //   "~/server" // a index.js ne treba jer automatski tarzi index.js
+  // ],
+
+  serverMiddleware: ["~/server/index.js"],
+  // serverMiddleware: ["~/api/index.js"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
